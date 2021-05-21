@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FantasyNameAPI.Controllers
 {
+    //Remains as a reference
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

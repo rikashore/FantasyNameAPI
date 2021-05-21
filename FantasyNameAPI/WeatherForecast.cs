@@ -2,6 +2,7 @@ using System;
 
 namespace FantasyNameAPI
 {
+    // These remain as references for me
     public class WeatherForecast
     {
         public DateTime Date { get; set; }
