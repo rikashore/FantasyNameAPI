@@ -12,7 +12,7 @@ namespace FantasyNameAPI.Controllers
     [Route("api/fantasyname")]
     public class FantasyNameController : ControllerBase
     {
-        private static readonly string[] Races = new[]
+        private static readonly string[] Classes = 
         {
             "skeleton", "zombie", "knight", "assassin", "warrior"
         };
@@ -32,7 +32,7 @@ namespace FantasyNameAPI.Controllers
         [HttpGet("{race}")]
         public async Task<ActionResult<FantasyItem>> GetFantasyItem(string race)
         {
-            if (!RaceExists(race))
+            if (!ClassExists(race))
                 return NotFound();
 
             var fantasyRace = await _fantasyNameContext.FantasyItems
@@ -53,7 +53,7 @@ namespace FantasyNameAPI.Controllers
         [HttpGet("{race}/names")]
         public async Task<ActionResult<List<string>>> GetFantasyRaceNames(string race)
         {
-            if (!RaceExists(race))
+            if (!ClassExists(race))
                 return NotFound();
 
             var fantasyRace = await _fantasyNameContext.FantasyItems
@@ -62,7 +62,19 @@ namespace FantasyNameAPI.Controllers
             return fantasyRace.Names;
         }
 
-        private bool RaceExists(string race)
-            => Array.Exists(Races,x => x == race);
+        [HttpGet("{race}/descriptions")]
+        public async Task<ActionResult<List<string>>> GetFantasyRaceDescriptions(string race)
+        {
+            if (!ClassExists(race))
+                return NotFound();
+
+            var fantasyRace = await _fantasyNameContext.FantasyItems
+                .FindAsync(race);
+
+            return fantasyRace.Descriptions;
+        }
+
+        private bool ClassExists(string race)
+            => Array.Exists(Classes,x => x == race);
     }
 }
