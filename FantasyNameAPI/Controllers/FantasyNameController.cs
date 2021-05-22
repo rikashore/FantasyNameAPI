@@ -29,14 +29,14 @@ namespace FantasyNameAPI.Controllers
         }
 
         // GET api/fantasyname/race
-        [HttpGet("{race}")]
-        public async Task<ActionResult<FantasyItem>> GetFantasyItem(string race)
+        [HttpGet("{fantasyClass}")]
+        public async Task<ActionResult<FantasyItem>> GetFantasyItem(string fantasyClass)
         {
-            if (!ClassExists(race))
+            if (!ClassExists(fantasyClass))
                 return NotFound();
 
             var fantasyRace = await _fantasyNameContext.FantasyItems
-                .FindAsync(race);
+                .FindAsync(fantasyClass);
             
             var name = fantasyRace.Names[_random.Next(fantasyRace.Names.Count)];
             var description = fantasyRace.Descriptions[_random.Next(fantasyRace.Descriptions.Count)];
@@ -50,31 +50,31 @@ namespace FantasyNameAPI.Controllers
         }
 
         // GET api/fantasyname/race/names
-        [HttpGet("{race}/names")]
-        public async Task<ActionResult<List<string>>> GetFantasyRaceNames(string race)
+        [HttpGet("{fantasyClass}/names")]
+        public async Task<ActionResult<List<string>>> GetFantasyRaceNames(string fantasyClass)
         {
-            if (!ClassExists(race))
+            if (!ClassExists(fantasyClass))
                 return NotFound();
 
             var fantasyRace = await _fantasyNameContext.FantasyItems
-                .FindAsync(race);
+                .FindAsync(fantasyClass);
 
             return fantasyRace.Names;
         }
 
-        [HttpGet("{race}/descriptions")]
-        public async Task<ActionResult<List<string>>> GetFantasyRaceDescriptions(string race)
+        [HttpGet("{fantasyClass}/descriptions")]
+        public async Task<ActionResult<List<string>>> GetFantasyRaceDescriptions(string fantasyClass)
         {
-            if (!ClassExists(race))
+            if (!ClassExists(fantasyClass))
                 return NotFound();
 
             var fantasyRace = await _fantasyNameContext.FantasyItems
-                .FindAsync(race);
+                .FindAsync(fantasyClass);
 
             return fantasyRace.Descriptions;
         }
 
-        private bool ClassExists(string race)
-            => Array.Exists(Classes,x => x == race);
+        private bool ClassExists(string fantasyClass)
+            => Array.Exists(Classes,x => x == fantasyClass);
     }
 }
